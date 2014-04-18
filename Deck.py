@@ -23,11 +23,22 @@ class Deck(list):
         self.extend(shufDeck)
 
     
-    def deal(self, n=1, N=1):
+    def deal(self, cards=1, hands=1):
         data=[]
-        data.append((self.pop()) for i in range (n))
-        data = list(chain(*data))
-        return data
+        data.append([list() for _i in range (hands)]) # Creating Hands
+        
+        for i in range (cards):
+            for ii in range (hands):
+                data[0][ii].append((self.pop()))
+        if hands == 1:
+            return data[0][0]
+        else:
+            return data[0]
+        #for iii in range (hands):
+        #    yield list(data[0][iii])
+            
+        #data = list(chain(*data))
+        
     
     def restore(self, hand):
         if (type(hand) is list):
@@ -39,11 +50,7 @@ class Deck(list):
     @staticmethod
     def disabledmethods():
         raise Exception('Function not supported')
-    def appendd(self, x):
-        if (type(x) == Card) == True:
-            return self.append(x)
-        else:
-            raise Exception('Unsported use of Appendd')
+    
     #def append(self, x): Deck.disabledmethods()
     #def sort(self): Deck.disabledmethods()
     #def reverse(self): Deck.disabledmethods()
@@ -54,14 +61,14 @@ class PinochleDeck(Deck):
     cardList=[7, 8, 9, 10, 11, 12, 20, 21, 22, 23, 24, 25, 33, 34, 35, 36, 37, 38, 46, 47, 48, 49, 50, 51]
     def __init__(self):
         for i in (PinochleDeck.cardList):
-            self.appendd(Card(i))
-            self.appendd(Card(i))
+            self.append(Card(i))
+            self.append(Card(i))
             
 if __name__ == '__main__':   
     d = PinochleDeck()
-    #d.shuffle()
-    print ('>>> h = d.deal(5)')    
-    h = d.deal(5)
+    d.shuffle()
+    print ('>>> h = d.deal(5,3)')    
+    h = d.deal(5,3)
     #print ('>>> d.restore(h)')
     #d.restore(h)
 
